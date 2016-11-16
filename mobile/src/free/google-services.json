@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "354500045556",
+    "firebase_url": "https://mapa-alerta-9e7d0.firebaseio.com",
+    "project_id": "mapa-alerta-9e7d0",
+    "storage_bucket": "mapa-alerta-9e7d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354500045556:android:3a2c79eaa9d260b3",
+        "android_client_info": {
+          "package_name": "br.com.helpdev.mapaalerta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354500045556-kce3eskhsh5f154v86iv71d6mu7soeq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXb8cVAbK-bD68eq9TogS2NN10YwOehI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354500045556:android:6229818e014c2e77",
+        "android_client_info": {
+          "package_name": "br.com.helpdev.mapaalerta.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354500045556-kce3eskhsh5f154v86iv71d6mu7soeq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpXb8cVAbK-bD68eq9TogS2NN10YwOehI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
