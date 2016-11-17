@@ -83,4 +83,14 @@ public class ServiceLocation extends Service implements GoogleApiClient.Connecti
             System.out.println(location);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        try {
+            if (mGoogleApiClient != null) mGoogleApiClient.disconnect();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        super.onDestroy();
+    }
 }
