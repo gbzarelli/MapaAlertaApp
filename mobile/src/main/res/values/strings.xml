@@ -14,4 +14,7 @@
     <string name="problema_recuperar_gpx">PROBLEMAS AO RECUPERAR GPX</string>
     <string name="problema_carregar_gpx">PROBLEMAS AO CARREGAR ARQUIVO GPX</string>
     <string name="aguarde_carregando_arquivo">AGUARDE CARREGANDO ARQUIVO...</string>
+    <string name="load_gpx">Carregar GPX</string>
+    <string name="salvar">Salvar</string>
+    <string name="sem_titulo"><![CDATA[<Sem titulo>]]></string>
 </resources>

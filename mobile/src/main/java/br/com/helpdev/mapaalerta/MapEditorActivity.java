@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import br.com.helpdev.mapaalerta.gpx.GpxMapUtils;
 import br.com.helpdev.supportlib.file_selector.FileSelectorActivity;
 
-public class MapsActivity extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GpxMapUtils.LoadGpxAsyncCallback {
+public class MapEditorActivity extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GpxMapUtils.LoadGpxAsyncCallback {
 
     private Snackbar mLoadSnack;
 
-    public MapsActivity() {
+    public MapEditorActivity() {
         super(R.layout.activity_maps, R.id.map);
     }
 
@@ -35,6 +35,7 @@ public class MapsActivity extends SimpleMapActivity implements OnMapReadyCallbac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setTitle(getString(R.string.sem_titulo));
         setEnableBtTerrain(R.id.bt_terreno, true);
     }
 

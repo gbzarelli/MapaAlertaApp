@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import br.com.helpdev.mapaalerta.services.ServiceLocation;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -28,12 +26,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        startService(new Intent(this, ServiceLocation.class));
+      //  startService(new Intent(this, ServiceLocation.class));
 
     }
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+        startActivity(new Intent(MainActivity.this, MapEditorActivity.class));
     }
 }
