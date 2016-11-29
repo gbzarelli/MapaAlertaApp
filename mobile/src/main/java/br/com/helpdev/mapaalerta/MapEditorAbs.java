@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import br.com.helpdev.mapaalerta.gpx.GpxMapUtils;
 import br.com.helpdev.supportlib.file_selector.FileSelectorActivity;
 
-public class MapEditorActivity extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GpxMapUtils.LoadGpxAsyncCallback {
+public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GpxMapUtils.LoadGpxAsyncCallback {
 
     private Snackbar mLoadSnack;
 
-    public MapEditorActivity() {
+    public MapEditorAbs() {
         super(R.layout.activity_maps, R.id.map);
     }
 
