@@ -1,37 +1,47 @@
 package br.com.helpdev.mapaalerta;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.support.annotation.Nullable;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.Random;
+
+import br.com.helpdev.mapaalerta.free.AdsUtils;
+
+public class MainActivity extends MainActivityAbs {
+    private InterstitialAd interstitialAd;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        AdsUtils.insertAds(this, R.id.adView);
+        createInterstitial();
+    }
 
-        String[] permissoes = new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-        };
-        ActivityCompat.requestPermissions(this, permissoes, 1);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
-
-      //  startService(new Intent(this, ServiceLocation.class));
-
+    private void createInterstitial() {
+        interstitialAd = AdsUtils.getNewInsterstitial(this, R.string.banner_ad_intersticial_id, new AdListener() {
+            @Override
+            public void onAdClosed() {
+                interstitialAd.loadAd(AdsUtils.getNewAdRequest());
+                MainActivity.super.onClickFab();
+            }
+        });
     }
 
     @Override
-    public void onClick(View v) {
-        startActivity(new Intent(MainActivity.this, MapEditorActivity.class));
+    protected void onClickFab() {
+        if (new Random().nextInt(1) != 0 || interstitialAd == null) {
+            super.onClickFab();
+            return;
+        }
+
+        if (interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        } else {
+            interstitialAd.loadAd(AdsUtils.getNewAdRequest());
+            super.onClickFab();
+        }
     }
 }

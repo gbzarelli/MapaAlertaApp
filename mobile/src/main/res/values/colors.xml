@@ -6,4 +6,7 @@
     <color name="colorAccentDark">#C62828</color>
 
     <color name="snackBarColor">#fffec100</color>
+
+
+    <color name="cinza_claro">#ffe8e8e8</color>
 </resources>

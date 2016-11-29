@@ -1,2 +1,2 @@
-include ':mobile',':support_lib'
-project(':support_lib').projectDir = new File(rootProject.projectDir, '../AndroidSupportLib/supportlib')
+include ':mobile',':support_lib_maps'
+project(':support_lib_maps').projectDir = new File(rootProject.projectDir, '../AndroidSupportLib-maps/supportlib_maps')

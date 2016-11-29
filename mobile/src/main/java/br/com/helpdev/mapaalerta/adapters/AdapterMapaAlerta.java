@@ -10,24 +10,25 @@ import java.util.List;
 
 import br.com.helpdev.mapaalerta.R;
 import br.com.helpdev.mapaalerta.objetos.ObMapAlert;
+import br.com.helpdev.supportlib.adapters.RecyclerViewAdapter;
 
 /**
  * Created by Guilherme Biff Zarelli on 29/11/16.
  */
 
-public class AdapterMapaAlerta extends RecyclerViewAdapter2<ObMapAlert, AdapterMapaAlerta.MapAlertaHolder>
-        implements RecyclerViewAdapter2.RecyclerAdapterListener<ObMapAlert> {
+public class AdapterMapaAlerta extends RecyclerViewAdapter<ObMapAlert, AdapterMapaAlerta.MapAlertaHolder>
+        implements RecyclerViewAdapter.RecyclerAdapterListener<ObMapAlert> {
 
 
-    public interface AdapterMainListener {
+    public interface AdapterMapaAlertaListener {
         void onClickItem(ObMapAlert obMapAlert);
 
         void onClickManageItem(ObMapAlert obMapAlert);
     }
 
-    private AdapterMainListener listener;
+    private AdapterMapaAlertaListener listener;
 
-    public AdapterMapaAlerta(Context context, List<ObMapAlert> lista, AdapterMainListener adapterMainListener) {
+    public AdapterMapaAlerta(Context context, List<ObMapAlert> lista, AdapterMapaAlertaListener adapterMainListener) {
         super(context, lista, R.layout.item_main, 80, AdapterMapaAlerta.MapAlertaHolder.class);
         setListener(this);
         this.listener = adapterMainListener;

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mapa Alerta</string>
     <string name="title_activity_maps">Mapa editor</string>
@@ -5,16 +6,16 @@
     <string name="start_point">Start point</string>
     <string name="end_point">End point</string>
     <string name="terreno">Terreno</string>
-    <string name="tipo_mapa">Selecione o tipo do mapa</string>
 
-    <string name="map_type_road">Normal</string>
-    <string name="map_type_hybrid">Hibrido</string>
-    <string name="map_type_satellite">Satelite</string>
-    <string name="map_type_terrain">Terreno</string>
+
+
     <string name="problema_recuperar_gpx">PROBLEMAS AO RECUPERAR GPX</string>
     <string name="problema_carregar_gpx">PROBLEMAS AO CARREGAR ARQUIVO GPX</string>
     <string name="aguarde_carregando_arquivo">AGUARDE CARREGANDO ARQUIVO...</string>
     <string name="load_gpx">Carregar GPX</string>
     <string name="salvar">Salvar</string>
-    <string name="sem_titulo"><![CDATA[<Sem titulo>]]></string>
+    <string name="sem_titulo"><![CDATA[<SEM TÍTULO>]]></string>
+    <string name="alert">ALERTA</string>
+    <string name="route">ROTA</string>
+    <string name="actions">AÇÕES:</string>
 </resources>

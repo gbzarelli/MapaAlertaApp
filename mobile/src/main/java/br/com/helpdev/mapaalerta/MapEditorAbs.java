@@ -12,20 +12,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import br.com.helpdev.mapaalerta.gpx.GpxMapUtils;
+import br.com.helpdev.mapaalerta.objetos.ObMapAlert;
 import br.com.helpdev.supportlib.file_selector.FileSelectorActivity;
+import br.com.helpdev.supportlib_maps.activities.SimpleMapActivity;
+import br.com.helpdev.supportlib_maps.gpx.GpxMapUtils;
 
-public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GpxMapUtils.LoadGpxAsyncCallback {
+public abstract class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GpxMapUtils.LoadGpxAsyncCallback {
 
+    public static final String PARAM_OB_MAPALERT_EDIT = "PARAM_OB_MAPALERT_EDIT";
+
+    private static final int REQUEST_CODE_GPX_SELECTOR = 1;
     private Snackbar mLoadSnack;
+    private ObMapAlert obMapAlert;
 
     public MapEditorAbs() {
         super(R.layout.activity_maps, R.id.map);
@@ -35,10 +41,17 @@ public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallbac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setTitle(getString(R.string.sem_titulo));
         setEnableBtTerrain(R.id.bt_terreno, true);
-    }
 
+        if (savedInstanceState == null) {
+            if (getIntent().hasExtra(PARAM_OB_MAPALERT_EDIT)) {
+                obMapAlert = (ObMapAlert) getIntent().getSerializableExtra(PARAM_OB_MAPALERT_EDIT);
+            }
+            String title = obMapAlert == null ? getString(R.string.sem_titulo) : obMapAlert.getTitle();
+            getSupportActionBar().setTitle(title);
+            Toast.makeText(this, "Use 'long click' para edição do mapa!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,13 +72,13 @@ public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallbac
         ArrayList<String> lista = new ArrayList<>();
         lista.add("gpx");
         intent.putStringArrayListExtra(FileSelectorActivity.PARAM_IT_FILE_TYPES_ARRAYLIST, lista);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUEST_CODE_GPX_SELECTOR);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_GPX_SELECTOR && resultCode == RESULT_OK) {
             if (null == data) {
                 showSnackBar(getString(R.string.problema_recuperar_gpx), Snackbar.LENGTH_INDEFINITE);
                 return;
@@ -74,7 +87,6 @@ public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallbac
             GpxMapUtils.loadGpxAsync(this, getMap(), new File(stringExtra), this);
         }
     }
-
 
     private void dismissLoadSnack() {
         if (mLoadSnack != null && mLoadSnack.isShown()) {
@@ -97,7 +109,6 @@ public class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallbac
         view.setLayoutParams(params);
         return snackBar;
     }
-
 
     @Override
     public void gpxLoadStart() {
