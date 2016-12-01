@@ -22,19 +22,22 @@ public class XmlMapAlert implements Serializable {
     private String fileGpx;
     @Element(name = "file_imagem", required = false)
     private String fileImagem;
-    @ElementList(name = "notifications", type = ObMapNotification.class, required = false)
-    private List<ObMapNotification> obMapLocations;
+
+    @ElementList(name = "notifications", type = XmlMapNotification.class, required = false)
+    private List<XmlMapNotification> obMapLocations;
+    @ElementList(name = "locations", type = XmlMapNotification.class, required = false, inline = true)
+    private List<XmlMapLocation> obMapRoute;
 
     public XmlMapAlert(String title) {
-        this(title, null, null, null, null);
+        this.title = title;
     }
 
-    public XmlMapAlert(String title, String descricao, String gpx, List<ObMapNotification> obMapLocations, String fileImagem) {
-        this.title = title;
-        this.descricao = descricao;
-        this.fileGpx = gpx;
-        this.obMapLocations = obMapLocations;
-        this.fileImagem = fileImagem;
+    public List<XmlMapLocation> getObMapRoute() {
+        return obMapRoute;
+    }
+
+    public void setObMapRoute(List<XmlMapLocation> obMapRoute) {
+        this.obMapRoute = obMapRoute;
     }
 
     public String getDescricao() {
@@ -53,11 +56,11 @@ public class XmlMapAlert implements Serializable {
         this.title = title;
     }
 
-    public List<ObMapNotification> getObMapLocations() {
+    public List<XmlMapNotification> getObMapLocations() {
         return obMapLocations;
     }
 
-    public void setObMapLocations(List<ObMapNotification> obMapLocations) {
+    public void setObMapLocations(List<XmlMapNotification> obMapLocations) {
         this.obMapLocations = obMapLocations;
     }
 

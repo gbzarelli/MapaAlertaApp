@@ -1,15 +1,21 @@
 package br.com.helpdev.mapaalerta.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 import br.com.helpdev.mapaalerta.R;
 import br.com.helpdev.mapaalerta.objetos.ObMapAlert;
+import br.com.helpdev.mapaalerta.objetos.xml.XmlMapAlert;
 import br.com.helpdev.supportlib.adapters.RecyclerViewAdapter;
 
 /**
@@ -36,8 +42,18 @@ public class AdapterMapaAlerta extends RecyclerViewAdapter<ObMapAlert, AdapterMa
 
     @Override
     public void onBindViewHolder(AdapterMapaAlerta.MapAlertaHolder holder, int position) {
-        ObMapAlert obMapAlert = getLista().get(position);
+        XmlMapAlert obMapAlert = getLista().get(position).getObMapAlertXml();
         holder.title.setText(obMapAlert.getTitle());
+        try {
+            if (obMapAlert.getFileImagem() != null && !obMapAlert.getFileImagem().isEmpty() && !holder.imvLoad) {
+                File file = new File(obMapAlert.getFileImagem());
+                Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                holder.imvMapa.setImageBitmap(bitmap);
+                holder.imvLoad = true;
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     @Override
@@ -53,7 +69,6 @@ public class AdapterMapaAlerta extends RecyclerViewAdapter<ObMapAlert, AdapterMa
                 }
             }
         });
-
         return mp;
     }
 
@@ -71,12 +86,15 @@ public class AdapterMapaAlerta extends RecyclerViewAdapter<ObMapAlert, AdapterMa
 
         TextView title, description;
         View imvManage;
+        ImageView imvMapa;
+        boolean imvLoad = false;
 
         public MapAlertaHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             imvManage = itemView.findViewById(R.id.imv_manage);
+            imvMapa = (ImageView) itemView.findViewById(R.id.imv_map);
         }
     }
 }

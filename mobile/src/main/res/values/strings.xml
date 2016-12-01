@@ -13,9 +13,12 @@
     <string name="problema_carregar_gpx">PROBLEMAS AO CARREGAR ARQUIVO GPX</string>
     <string name="aguarde_carregando_arquivo">AGUARDE CARREGANDO ARQUIVO...</string>
     <string name="load_gpx">Carregar GPX</string>
+    <string name="remove_gpx">Remover GPX</string>
     <string name="salvar">Salvar</string>
     <string name="sem_titulo"><![CDATA[<SEM TÍTULO>]]></string>
     <string name="alert">ALERTA</string>
     <string name="route">ROTA</string>
     <string name="actions">AÇÕES:</string>
+    <string name="sample_text">Sample Text</string>
+    <string name="hint_edit_map">Use \'LONG CLICK\' para edição do mapa!\n</string>
 </resources>

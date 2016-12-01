@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by Guilherme Biff Zarelli on 25/11/16.
  */
-@Root(name = "route")
+@Root(name = "location")
 public class XmlMapLocation implements Serializable {
 
     @Element(name = "lat")

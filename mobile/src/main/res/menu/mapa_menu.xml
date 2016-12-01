@@ -13,8 +13,13 @@
         android:title="@string/salvar"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menu_gpx"
+        android:id="@+id/load_gpx"
         android:title="@string/load_gpx"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/remove_gpx"
+        android:title="@string/remove_gpx"
         android:visible="true"
         app:showAsAction="ifRoom" />
 </menu>

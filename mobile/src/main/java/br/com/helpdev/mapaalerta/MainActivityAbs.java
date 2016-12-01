@@ -13,6 +13,7 @@ import java.util.List;
 
 import br.com.helpdev.mapaalerta.adapters.AdapterMapaAlerta;
 import br.com.helpdev.mapaalerta.objetos.ObMapAlert;
+import br.com.helpdev.mapaalerta.objetos.xml.XmlMapAlert;
 import br.com.helpdev.supportlib_maps.activities.AppCompatLocation;
 import br.com.helpdev.supportlib_maps.locations.LocationUtils;
 
@@ -42,14 +43,10 @@ public abstract class MainActivityAbs extends AppCompatLocation implements View.
 
         RecyclerView recycleViww = (RecyclerView) findViewById(R.id.recycler_view);
         List<ObMapAlert> lista = new ArrayList<>();
-        lista.add(new ObMapAlert("titulo1"));
-        lista.add(new ObMapAlert("titulo2"));
-        lista.add(new ObMapAlert("titulo3"));
-        lista.add(new ObMapAlert("titulo4"));
-        lista.add(new ObMapAlert("titulo5"));
-        lista.add(new ObMapAlert("titulo6"));
-        lista.add(new ObMapAlert("titulo7"));
-
+        for (int i = 0; i < 10; i++) {
+            XmlMapAlert obMapAlert = new XmlMapAlert("TITULO-" + i);
+            lista.add(new ObMapAlert(obMapAlert));
+        }
         AdapterMapaAlerta ad = new AdapterMapaAlerta(this, lista, this);
         recycleViww.setAdapter(ad);
     }

@@ -16,25 +16,32 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.helpdev.mapaalerta.objetos.ObMapAlert;
+import br.com.helpdev.mapaalerta.objetos.xml.XmlMapAlert;
+import br.com.helpdev.mapaalerta.objetos.xml.XmlMapLocation;
 import br.com.helpdev.supportlib.file_selector.FileSelectorActivity;
-import br.com.helpdev.supportlib_maps.activities.SimpleMapActivity;
+import br.com.helpdev.supportlib_maps.activities.MapRouteEditorActivity;
 import br.com.helpdev.supportlib_maps.gpx.GpxMapUtils;
+import br.com.helpdev.supportlib_maps.gpx.ObGpxMap;
+import br.com.helpdev.supportlib_maps.gpx.objetos.Gpx;
 
-public abstract class MapEditorAbs extends SimpleMapActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GpxMapUtils.LoadGpxAsyncCallback {
+public abstract class MapEditorAbs extends MapRouteEditorActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GpxMapUtils.LoadGpxAsyncCallback {
 
     public static final String PARAM_OB_MAPALERT_EDIT = "PARAM_OB_MAPALERT_EDIT";
 
     private static final int REQUEST_CODE_GPX_SELECTOR = 1;
     private Snackbar mLoadSnack;
     private ObMapAlert obMapAlert;
+    private ObGpxMap obGpxMap;
 
     public MapEditorAbs() {
-        super(R.layout.activity_maps, R.id.map);
+        super(R.layout.activity_maps, R.id.map, R.color.colorAccentDark);
     }
 
     @Override
@@ -44,13 +51,39 @@ public abstract class MapEditorAbs extends SimpleMapActivity implements OnMapRea
         setEnableBtTerrain(R.id.bt_terreno, true);
 
         if (savedInstanceState == null) {
+
             if (getIntent().hasExtra(PARAM_OB_MAPALERT_EDIT)) {
                 obMapAlert = (ObMapAlert) getIntent().getSerializableExtra(PARAM_OB_MAPALERT_EDIT);
             }
-            String title = obMapAlert == null ? getString(R.string.sem_titulo) : obMapAlert.getTitle();
-            getSupportActionBar().setTitle(title);
-            Toast.makeText(this, "Use 'long click' para edição do mapa!", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(this, R.string.hint_edit_map, Toast.LENGTH_LONG).show();
+
+            if (obMapAlert == null) {
+                obMapAlert = new ObMapAlert(new XmlMapAlert(""));
+                setTitleMapEditor(getString(R.string.sem_titulo));
+                return;
+            }
+
+            setTitleMapEditor(obMapAlert.getObMapAlertXml().getTitle());
+            if (obMapAlert.getObMapAlertXml().getFileGpx() != null) {
+                GpxMapUtils.loadGpxAsync(this, getMap(), new File(obMapAlert.getObMapAlertXml().getFileGpx()), this);
+            }
+            refreshMapRoute();
         }
+    }
+
+    private void refreshMapRoute() {
+        if (obMapAlert.getObMapAlertXml().getObMapRoute() != null && !obMapAlert.getObMapAlertXml().getObMapRoute().isEmpty()) {
+            List<LatLng> locations = new ArrayList<>();
+            for (XmlMapLocation xmlMapLocation : obMapAlert.getObMapAlertXml().getObMapRoute()) {
+                locations.add(new LatLng(xmlMapLocation.getLatitude(), xmlMapLocation.getLongitude()));
+            }
+            super.loadMap(locations);
+        }
+    }
+
+    private void setTitleMapEditor(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -61,8 +94,14 @@ public abstract class MapEditorAbs extends SimpleMapActivity implements OnMapRea
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_gpx) {
+        if (item.getItemId() == R.id.load_gpx) {
             selectFileGPX();
+        } else if (item.getItemId() == R.id.remove_gpx) {
+            if (obGpxMap != null) {
+                obGpxMap.remove();
+                obGpxMap = null;
+                goToMyLocation();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,8 +161,14 @@ public abstract class MapEditorAbs extends SimpleMapActivity implements OnMapRea
         showSnackBar(getString(R.string.problema_carregar_gpx), Snackbar.LENGTH_INDEFINITE);
     }
 
+
     @Override
-    public void gpxLoadSucess() {
+    public void gpxLoadSucess(Gpx gpx, ObGpxMap polyline) {
+        if (this.obGpxMap != null) {
+            this.obGpxMap.remove();
+        }
+        obMapAlert.setGpx(gpx);
+        this.obGpxMap = polyline;
         dismissLoadSnack();
     }
 }
